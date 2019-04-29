@@ -44,9 +44,21 @@ network parameters during training.
 #### 在训练过程中Batch normalization层发生了什么？
 原文中的反向转播梯度更新算法如下：
 
-<div align="center">
-<img src="graph/batch_norm_update.png" width=400>
-</div>
+$$
+\begin{aligned} \frac{\partial \ell}{\partial \widehat{x}_{i}} &=\frac{\partial \ell}{\partial y_{i}} \cdot \gamma \\
+
+\frac{\partial \ell}{\partial \sigma_{\mathcal{B}}^{2}} &=\sum_{i=1}^{m} \frac{\partial \ell}{\partial \widehat{x}_{i}} \cdot\left(x_{i}-\mu_{\mathcal{B}}\right) \cdot \frac{-1}{2}\left(\sigma_{\mathcal{B}}^{2}+\epsilon\right)^{-3 / 2}\\
+
+\frac{\partial \ell}{\partial \mu_{\mathcal{B}}} &=\left(\sum_{i=1}^{m} \frac{\partial \ell}{\partial \widehat{x}_{i}} \cdot \frac{-1}{\sqrt{\sigma_{\mathcal{B}}^{2}+\epsilon}}\right)+\frac{\partial \ell}{\partial \sigma_{\mathcal{B}}^{2}} \cdot \frac{\sum_{i=1}^{m}-2\left(x_{i}-\mu_{\mathcal{B}}\right)}{m} \\
+
+\frac{\partial \ell}{\partial x_{i}} &=\frac{\partial \ell}{\partial \widehat{x}_{i}} \cdot \frac{1}{\sqrt{\sigma_{\mathcal{B}}^{2}+\epsilon}}+\frac{2\left(x_{i}-\mu_{\mathcal{B}}\right)}{\boldsymbol{m}}+\frac{\partial \ell}{\partial \mu_{\mathcal{B}}} \cdot \frac{1}{m} \\
+
+
+\frac{\partial \ell}{\partial \gamma} &=\sum_{i=1}^{m} \frac{\partial \ell}{\partial y_{i}} \cdot \widehat{x}_{i} \\
+
+\frac{\partial \ell}{\partial \beta} &=\sum_{i=1}^{m} \frac{\partial \ell}{\partial y_{i}}
+\end{aligned}
+$$
 
 其实可以将batch normalization看作一种特殊的激活方式，输入$x$ 被标准化函数激活，所以标准化函数的梯度会引入计算，上式中第四行就代表的是loss对被标准化之前的$x$的求导。
 

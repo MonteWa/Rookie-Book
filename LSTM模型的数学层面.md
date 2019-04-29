@@ -64,7 +64,7 @@ $$
 LSTM前向传播的图示如下：
 
 <div align="center">
-<img src="graph/lstm-lhy.png" width=400>
+<img src="graph/lstm-lhy.jpg" width=400>
 </div>
 
 LSTM的前向传播公式如下：
