@@ -14,6 +14,8 @@ Batch normalization的论文对该算法的描述如下：[Batch Normalization]
 <img src="graph/batch_norm.jpg" width=400>
 </div>
 
+![baidu](graph/batch_norm.png)
+
 从算法中我们可以看出，上一层的激活值首先会被统计求出均值 $\mu$ 和方差 $\sigma^{^{2}}$, 然后进行标准化，注意这里标准化时方差需要加上极小值 $\epsilon$，目的是防止除数为0.
 
 注意最后输出的:
