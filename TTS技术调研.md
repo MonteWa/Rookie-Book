@@ -12,12 +12,12 @@
 模型是基于PixelCNN重新设计的，使用了causal convolution保证预测点不会用到未来信息，预测获得的点会用作输入帮助预测新的样本。工作过程图示如下：
 
 <div align="center">
-<img src="graph/wavenet.png" width=500>
+<img src="graph/wavenet.jpg" width=500>
 </div>
 
 为了扩大感受野（receptive field）的同时不增加太多的计算量，使用了dilated convolution，简单地说就是在卷积核上打孔，抛弃一些信息，如下图所示：
 <div align="center">
-<img src="graph/wavenet_dialateconv.png" width=500>
+<img src="graph/wavenet_dialateconv.jpg" width=500>
 </div>
 
 预测输出使用了softmax分布，raw格式信号都是16bit的整数值序列，所以每个时间点的输出有65536种可能性，他们首先对数据应用μ律压扩变换，然后将其量化为256个可能的值：

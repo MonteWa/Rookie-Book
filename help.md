@@ -30,10 +30,10 @@
 
   [示例]: http://example.com
 
-![圖](Icon-pictures.png "icon")
+![圖](Icon-pictures.jpg "icon")
 
 > Markdown使用電郵用字元「>」來引用。
 
 行間<abbr title="Hypertext Markup Language">HTML</abbr>亦受支援。
 
-![test](test.png)
+![test](test.jpg)

@@ -16,7 +16,7 @@
 先来看看RNN的前向传播：
 
 <div align="center">
-<img src="graph/RNN-unrolled.png" width=400>
+<img src="graph/RNN-unrolled.jpg" width=400>
 </div>
 
 再看看前向传播公式：
