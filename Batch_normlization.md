@@ -19,8 +19,10 @@ Batch normalization的论文对该算法的描述如下：[Batch Normalization]
 从算法中我们可以看出，上一层的激活值首先会被统计求出均值 $\mu$ 和方差 $\sigma^{^{2}}$, 然后进行标准化，注意这里标准化时方差需要加上极小值 $\epsilon$，目的是防止除数为0.
 
 注意最后输出的:
+
 <a href="https://www.codecogs.com/eqnedit.php?latex=y&space;=&space;\gamma&space;\cdot&space;x&space;&plus;&space;\beta" target="_blank"><img src="https://latex.codecogs.com/gif.latex?y&space;=&space;\gamma&space;\cdot&space;x&space;&plus;&space;\beta" title="y = \gamma \cdot x + \beta" /></a>
-这里 $\gamma$和 $\beta$ 是两个可以更新的参数，这样做的原因原论文的结束如下：
+
+这里 <a href="https://www.codecogs.com/eqnedit.php?latex=\gamma" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma" title="\gamma" /></a>和 <a href="https://www.codecogs.com/eqnedit.php?latex=\beta" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\beta" title="\beta" /></a> 是两个可以更新的参数，这样做的原因原论文的结束如下：
 
 >Note that simply normalizing each input of a layer may
 change what the layer can represent. For instance, normalizing
@@ -46,23 +48,19 @@ network parameters during training.
 #### 在训练过程中Batch normalization层发生了什么？
 原文中的反向转播梯度更新算法如下：
 
-$$
-\begin{aligned} \frac{\partial \ell}{\partial \widehat{x}_{i}} &=\frac{\partial \ell}{\partial y_{i}} \cdot \gamma \\
+<a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;\ell}{\partial&space;\widehat{x}_{i}}&space;=\frac{\partial&space;\ell}{\partial&space;y_{i}}&space;\cdot&space;\gamma" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;\ell}{\partial&space;\widehat{x}_{i}}&space;=\frac{\partial&space;\ell}{\partial&space;y_{i}}&space;\cdot&space;\gamma" title="\frac{\partial \ell}{\partial \widehat{x}_{i}} =\frac{\partial \ell}{\partial y_{i}} \cdot \gamma" /></a>
 
-\frac{\partial \ell}{\partial \sigma_{\mathcal{B}}^{2}} &=\sum_{i=1}^{m} \frac{\partial \ell}{\partial \widehat{x}_{i}} \cdot\left(x_{i}-\mu_{\mathcal{B}}\right) \cdot \frac{-1}{2}\left(\sigma_{\mathcal{B}}^{2}+\epsilon\right)^{-3 / 2}\\
+<a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;\ell}{\partial&space;\sigma_{\mathcal{B}}^{2}}&space;=\sum_{i=1}^{m}&space;\frac{\partial&space;\ell}{\partial&space;\widehat{x}_{i}}&space;\cdot\left(x_{i}-\mu_{\mathcal{B}}\right)&space;\cdot&space;\frac{-1}{2}\left(\sigma_{\mathcal{B}}^{2}&plus;\epsilon\right)^{-3&space;/&space;2}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;\ell}{\partial&space;\sigma_{\mathcal{B}}^{2}}&space;=\sum_{i=1}^{m}&space;\frac{\partial&space;\ell}{\partial&space;\widehat{x}_{i}}&space;\cdot\left(x_{i}-\mu_{\mathcal{B}}\right)&space;\cdot&space;\frac{-1}{2}\left(\sigma_{\mathcal{B}}^{2}&plus;\epsilon\right)^{-3&space;/&space;2}" title="\frac{\partial \ell}{\partial \sigma_{\mathcal{B}}^{2}} =\sum_{i=1}^{m} \frac{\partial \ell}{\partial \widehat{x}_{i}} \cdot\left(x_{i}-\mu_{\mathcal{B}}\right) \cdot \frac{-1}{2}\left(\sigma_{\mathcal{B}}^{2}+\epsilon\right)^{-3 / 2}" /></a>
 
-\frac{\partial \ell}{\partial \mu_{\mathcal{B}}} &=\left(\sum_{i=1}^{m} \frac{\partial \ell}{\partial \widehat{x}_{i}} \cdot \frac{-1}{\sqrt{\sigma_{\mathcal{B}}^{2}+\epsilon}}\right)+\frac{\partial \ell}{\partial \sigma_{\mathcal{B}}^{2}} \cdot \frac{\sum_{i=1}^{m}-2\left(x_{i}-\mu_{\mathcal{B}}\right)}{m} \\
+<a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;\ell}{\partial&space;\mu_{\mathcal{B}}}&space;=\left(\sum_{i=1}^{m}&space;\frac{\partial&space;\ell}{\partial&space;\widehat{x}_{i}}&space;\cdot&space;\frac{-1}{\sqrt{\sigma_{\mathcal{B}}^{2}&plus;\epsilon}}\right)&plus;\frac{\partial&space;\ell}{\partial&space;\sigma_{\mathcal{B}}^{2}}&space;\cdot&space;\frac{\sum_{i=1}^{m}-2\left(x_{i}-\mu_{\mathcal{B}}\right)}{m}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;\ell}{\partial&space;\mu_{\mathcal{B}}}&space;=\left(\sum_{i=1}^{m}&space;\frac{\partial&space;\ell}{\partial&space;\widehat{x}_{i}}&space;\cdot&space;\frac{-1}{\sqrt{\sigma_{\mathcal{B}}^{2}&plus;\epsilon}}\right)&plus;\frac{\partial&space;\ell}{\partial&space;\sigma_{\mathcal{B}}^{2}}&space;\cdot&space;\frac{\sum_{i=1}^{m}-2\left(x_{i}-\mu_{\mathcal{B}}\right)}{m}" title="\frac{\partial \ell}{\partial \mu_{\mathcal{B}}} =\left(\sum_{i=1}^{m} \frac{\partial \ell}{\partial \widehat{x}_{i}} \cdot \frac{-1}{\sqrt{\sigma_{\mathcal{B}}^{2}+\epsilon}}\right)+\frac{\partial \ell}{\partial \sigma_{\mathcal{B}}^{2}} \cdot \frac{\sum_{i=1}^{m}-2\left(x_{i}-\mu_{\mathcal{B}}\right)}{m}" /></a>
 
-\frac{\partial \ell}{\partial x_{i}} &=\frac{\partial \ell}{\partial \widehat{x}_{i}} \cdot \frac{1}{\sqrt{\sigma_{\mathcal{B}}^{2}+\epsilon}}+\frac{2\left(x_{i}-\mu_{\mathcal{B}}\right)}{\boldsymbol{m}}+\frac{\partial \ell}{\partial \mu_{\mathcal{B}}} \cdot \frac{1}{m} \\
+<a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;\ell}{\partial&space;x_{i}}&space;=\frac{\partial&space;\ell}{\partial&space;\widehat{x}_{i}}&space;\cdot&space;\frac{1}{\sqrt{\sigma_{\mathcal{B}}^{2}&plus;\epsilon}}&plus;\frac{2\left(x_{i}-\mu_{\mathcal{B}}\right)}{\boldsymbol{m}}&plus;\frac{\partial&space;\ell}{\partial&space;\mu_{\mathcal{B}}}&space;\cdot&space;\frac{1}{m}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;\ell}{\partial&space;x_{i}}&space;=\frac{\partial&space;\ell}{\partial&space;\widehat{x}_{i}}&space;\cdot&space;\frac{1}{\sqrt{\sigma_{\mathcal{B}}^{2}&plus;\epsilon}}&plus;\frac{2\left(x_{i}-\mu_{\mathcal{B}}\right)}{\boldsymbol{m}}&plus;\frac{\partial&space;\ell}{\partial&space;\mu_{\mathcal{B}}}&space;\cdot&space;\frac{1}{m}" title="\frac{\partial \ell}{\partial x_{i}} =\frac{\partial \ell}{\partial \widehat{x}_{i}} \cdot \frac{1}{\sqrt{\sigma_{\mathcal{B}}^{2}+\epsilon}}+\frac{2\left(x_{i}-\mu_{\mathcal{B}}\right)}{\boldsymbol{m}}+\frac{\partial \ell}{\partial \mu_{\mathcal{B}}} \cdot \frac{1}{m}" /></a>
 
+<a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;\ell}{\partial&space;\gamma}&space;=\sum_{i=1}^{m}&space;\frac{\partial&space;\ell}{\partial&space;y_{i}}&space;\cdot&space;\widehat{x}_{i}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;\ell}{\partial&space;\gamma}&space;=\sum_{i=1}^{m}&space;\frac{\partial&space;\ell}{\partial&space;y_{i}}&space;\cdot&space;\widehat{x}_{i}" title="\frac{\partial \ell}{\partial \gamma} =\sum_{i=1}^{m} \frac{\partial \ell}{\partial y_{i}} \cdot \widehat{x}_{i}" /></a>
 
-\frac{\partial \ell}{\partial \gamma} &=\sum_{i=1}^{m} \frac{\partial \ell}{\partial y_{i}} \cdot \widehat{x}_{i} \\
+<a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;\ell}{\partial&space;\beta}&space;=\sum_{i=1}^{m}&space;\frac{\partial&space;\ell}{\partial&space;y_{i}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;\ell}{\partial&space;\beta}&space;=\sum_{i=1}^{m}&space;\frac{\partial&space;\ell}{\partial&space;y_{i}}" title="\frac{\partial \ell}{\partial \beta} =\sum_{i=1}^{m} \frac{\partial \ell}{\partial y_{i}}" /></a>
 
-\frac{\partial \ell}{\partial \beta} &=\sum_{i=1}^{m} \frac{\partial \ell}{\partial y_{i}}
-\end{aligned}
-$$
-
-其实可以将batch normalization看作一种特殊的激活方式，输入$x$ 被标准化函数激活，所以标准化函数的梯度会引入计算，上式中第四行就代表的是loss对被标准化之前的$x$的求导。
+需要对比前面的前向传播来看，通过链式法则逐步对每个参数求导，其实可以将batch normalization看作一种特殊的激活方式，输入x被标准化函数激活，所以标准化函数的梯度会引入计算，上式中第四行就代表的是loss对被标准化之前的$x$的求导。
 
 #### 在激活之前白化还是激活之后白化？
 这个问题似乎没有标准答案，正如前面所讨论的BN就是将每层数据标准化，默认的做法是将在激活之后进行BN操作，但是如果在数据进入激活函数之前进行标准化，如果新分布均值为0那么会有一般的激活输出为0，但是由于BN是可以控制训练分布的偏移，所以也就能大致控制被激活神经元数量，但有时候这样做效果会比放在激活之后好，所以还是都实验一下比较好。
