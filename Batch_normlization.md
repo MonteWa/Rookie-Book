@@ -16,7 +16,7 @@ Batch normalization的论文对该算法的描述如下：[Batch Normalization]
 
 ![](graph/batch_norm.png)
 
-从算法中我们可以看出，上一层的激活值首先会被统计求出均值 $\mu$ 和方差 $\sigma^{^{2}}$, 然后进行标准化，注意这里标准化时方差需要加上极小值 $\epsilon$，目的是防止除数为0.
+从算法中我们可以看出，上一层的激活值首先会被统计求出均值<a href="https://www.codecogs.com/eqnedit.php?latex=\mu" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\mu" title="\mu" /></a> 和方差 <a href="https://www.codecogs.com/eqnedit.php?latex=\sigma^{^{2}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\sigma^{^{2}}" title="\sigma^{^{2}}" /></a>, 然后进行标准化，注意这里标准化时方差需要加上极小值 <a href="https://www.codecogs.com/eqnedit.php?latex=\epsilon" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\epsilon" title="\epsilon" /></a>，目的是防止除数为0.
 
 注意最后输出的:
 
