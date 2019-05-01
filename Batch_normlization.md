@@ -60,7 +60,7 @@ network parameters during training.
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;\ell}{\partial&space;\beta}&space;=\sum_{i=1}^{m}&space;\frac{\partial&space;\ell}{\partial&space;y_{i}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;\ell}{\partial&space;\beta}&space;=\sum_{i=1}^{m}&space;\frac{\partial&space;\ell}{\partial&space;y_{i}}" title="\frac{\partial \ell}{\partial \beta} =\sum_{i=1}^{m} \frac{\partial \ell}{\partial y_{i}}" /></a>
 
-需要对比前面的前向传播来看，通过链式法则逐步对每个参数求导，其实可以将batch normalization看作一种特殊的激活方式，输入x被标准化函数激活，所以标准化函数的梯度会引入计算，上式中第四行就代表的是loss对被标准化之前的$x$的求导。
+需要对比前面的前向传播来看，通过链式法则逐步对每个参数求导，其实可以将batch normalization看作一种特殊的激活方式，输入x被标准化函数激活，所以标准化函数的梯度会引入计算，上式中第四行就代表的是loss对被标准化之前的x的求导。
 
 #### 在激活之前白化还是激活之后白化？
 这个问题似乎没有标准答案，正如前面所讨论的BN就是将每层数据标准化，默认的做法是将在激活之后进行BN操作，但是如果在数据进入激活函数之前进行标准化，如果新分布均值为0那么会有一般的激活输出为0，但是由于BN是可以控制训练分布的偏移，所以也就能大致控制被激活神经元数量，但有时候这样做效果会比放在激活之后好，所以还是都实验一下比较好。

@@ -39,7 +39,7 @@ RNN主要面临的是在处理长序列的问题时，梯度消失的问题。[U
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=h_{t}=\sigma&space;\left&space;(&space;W_{xh}x_{t}&space;&plus;&space;W_{hh}h_{t-1}&plus;b_{h}\right)&space;\tag{1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{t}=\sigma&space;\left&space;(&space;W_{xh}x_{t}&space;&plus;&space;W_{hh}h_{t-1}&plus;b_{h}\right)&space;\tag{1}" title="h_{t}=\sigma \left ( W_{xh}x_{t} + W_{hh}h_{t-1}+b_{h}\right) \tag{1}" /></a>
 
-我们可以想象 $h_{t-1}$ 里其实是包含 $h_{0}$ 到 $h_{t-2}$ 这些项的，所以我们在进行反向传播时，在求 $W_{hh}$ 的梯度时根据链式法则会遇到一个很长的 $h_{t}$ 的梯度的导数 $h_{t}^{'}$ 的连乘。就像下面这样：
+我们可以想象 <a href="https://www.codecogs.com/eqnedit.php?latex=h_{t-1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{t-1}" title="h_{t-1}" /></a> 里其实是包含 <a href="https://www.codecogs.com/eqnedit.php?latex=h_{0}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{0}" title="h_{0}" /></a> 到 <a href="https://www.codecogs.com/eqnedit.php?latex=h_{t-2}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{t-2}" title="h_{t-2}" /></a> 这些项的，所以我们在进行反向传播时，在求 <a href="https://www.codecogs.com/eqnedit.php?latex=W_{hh}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?W_{hh}" title="W_{hh}" /></a> 的梯度时根据链式法则会遇到一个很长的 <a href="https://www.codecogs.com/eqnedit.php?latex=h_{t}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{t}" title="h_{t}" /></a> 的梯度的导数 <a href="https://www.codecogs.com/eqnedit.php?latex=h_{t}^{'}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{t}^{'}" title="h_{t}^{'}" /></a> 的连乘。就像下面这样：
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;L_{t}}{\partial&space;W^{h}}=\sum_{t=0}^{T}&space;\sum_{k=0}^{t}&space;\frac{\partial&space;L_{t}}{\partial&space;y_{t}}&space;\frac{\partial&space;y_{t}}{\partial&space;h_{t}}\left(\prod_{j=k&plus;1}^{t}&space;\frac{\partial&space;h_{j}}{\partial&space;h_{j-1}}\right)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;L_{t}}{\partial&space;W^{h}}=\sum_{t=0}^{T}&space;\sum_{k=0}^{t}&space;\frac{\partial&space;L_{t}}{\partial&space;y_{t}}&space;\frac{\partial&space;y_{t}}{\partial&space;h_{t}}\left(\prod_{j=k&plus;1}^{t}&space;\frac{\partial&space;h_{j}}{\partial&space;h_{j-1}}\right)" title="\frac{\partial L_{t}}{\partial W^{h}}=\sum_{t=0}^{T} \sum_{k=0}^{t} \frac{\partial L_{t}}{\partial y_{t}} \frac{\partial y_{t}}{\partial h_{t}}\left(\prod_{j=k+1}^{t} \frac{\partial h_{j}}{\partial h_{j-1}}\right)" /></a>
 
@@ -51,7 +51,7 @@ RNN主要面临的是在处理长序列的问题时，梯度消失的问题。[U
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\sigma&space;^{'}=\sigma\left&space;(1-\sigma&space;\right&space;)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\sigma&space;^{'}=\sigma\left&space;(1-\sigma&space;\right&space;)" title="\sigma ^{'}=\sigma\left (1-\sigma \right )" /></a>
 
-所以 $\sigma ^{'}$ 的大小在0到0.25之间，可以想象这样一个因子在梯度计算中被重复相乘梯度会越来越小，导致两个在time step距离较远的输入无法产生足够的影响。
+所以 <a href="https://www.codecogs.com/eqnedit.php?latex=\sigma&space;^{'}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\sigma&space;^{'}" title="\sigma ^{'}" /></a> 的大小在0到0.25之间，可以想象这样一个因子在梯度计算中被重复相乘梯度会越来越小，导致两个在time step距离较远的输入无法产生足够的影响。
 
 #### 再看看LSTM
 LSTM前向传播的图示如下：
@@ -78,7 +78,7 @@ LSTM的前向传播公式如下：
   * 控制output gate与其他两个gate不同的是输入中不包含上个时间点记忆<a href="https://www.codecogs.com/eqnedit.php?latex=c_{t-1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?c_{t-1}" title="c_{t-1}" /></a> 取而代之的是当前更新过的记忆<a href="https://www.codecogs.com/eqnedit.php?latex=c_{t}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?c_{t}" title="c_{t}" /></a> 。
 
 #### LSTM是怎么解决RNN的问题的呢？
-LSTM缓解了梯度消失的问题，那么他是如何做到的呢？RNN中的主要问题出在$h_{t}$ 再做反向传播时梯度串联的相乘，越来越小的问题上，导致较早期的记忆无法对较远的判断造成影响。而在LSTM模型中，我们看看记忆这一项是怎么传播的:
+LSTM缓解了梯度消失的问题，那么他是如何做到的呢？RNN中的主要问题出在<a href="https://www.codecogs.com/eqnedit.php?latex=h_{t}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{t}" title="h_{t}" /></a> 再做反向传播时梯度串联的相乘，越来越小的问题上，导致较早期的记忆无法对较远的判断造成影响。而在LSTM模型中，我们看看记忆这一项是怎么传播的:
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=c_{t}&space;=f_{t}&space;c_{t-1}&plus;i_{t}&space;\tanh&space;\left(W_{x&space;c}&space;x_{t}&plus;W_{h&space;c}&space;h_{t_1}&plus;b_{c}\right)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?c_{t}&space;=f_{t}&space;c_{t-1}&plus;i_{t}&space;\tanh&space;\left(W_{x&space;c}&space;x_{t}&plus;W_{h&space;c}&space;h_{t_1}&plus;b_{c}\right)" title="c_{t} =f_{t} c_{t-1}+i_{t} \tanh \left(W_{x c} x_{t}+W_{h c} h_{t_1}+b_{c}\right)" /></a>
 

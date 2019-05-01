@@ -22,6 +22,4 @@
 
 预测输出使用了softmax分布，raw格式信号都是16bit的整数值序列，所以每个时间点的输出有65536种可能性，他们首先对数据应用μ律压扩变换，然后将其量化为256个可能的值：
 
-$$
-f\left(x_{t}\right)=\operatorname{sign}\left(x_{t}\right) \frac{\ln \left(1+\mu\left|x_{t}\right|\right)}{\ln (1+\mu)}
-$$
+<a href="https://www.codecogs.com/eqnedit.php?latex=f\left(x_{t}\right)=\operatorname{sign}\left(x_{t}\right)&space;\frac{\ln&space;\left(1&plus;\mu\left|x_{t}\right|\right)}{\ln&space;(1&plus;\mu)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f\left(x_{t}\right)=\operatorname{sign}\left(x_{t}\right)&space;\frac{\ln&space;\left(1&plus;\mu\left|x_{t}\right|\right)}{\ln&space;(1&plus;\mu)}" title="f\left(x_{t}\right)=\operatorname{sign}\left(x_{t}\right) \frac{\ln \left(1+\mu\left|x_{t}\right|\right)}{\ln (1+\mu)}" /></a>
