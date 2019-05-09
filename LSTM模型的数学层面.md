@@ -78,6 +78,8 @@ LSTM的前向传播公式如下：
   * 控制output gate与其他两个gate不同的是输入中不包含上个时间点记忆<a href="https://www.codecogs.com/eqnedit.php?latex=c_{t-1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?c_{t-1}" title="c_{t-1}" /></a> 取而代之的是当前更新过的记忆<a href="https://www.codecogs.com/eqnedit.php?latex=c_{t}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?c_{t}" title="c_{t}" /></a> 。
 
 #### LSTM是怎么解决RNN的问题的呢？
+>One solution is to consider adding the updates instead of multiplying them.
+
 LSTM缓解了梯度消失的问题，那么他是如何做到的呢？RNN中的主要问题出在<a href="https://www.codecogs.com/eqnedit.php?latex=h_{t}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{t}" title="h_{t}" /></a> 再做反向传播时梯度串联的相乘，越来越小的问题上，导致较早期的记忆无法对较远的判断造成影响。而在LSTM模型中，我们看看记忆这一项是怎么传播的:
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=c_{t}&space;=f_{t}&space;c_{t-1}&plus;i_{t}&space;\tanh&space;\left(W_{x&space;c}&space;x_{t}&plus;W_{h&space;c}&space;h_{t_1}&plus;b_{c}\right)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?c_{t}&space;=f_{t}&space;c_{t-1}&plus;i_{t}&space;\tanh&space;\left(W_{x&space;c}&space;x_{t}&plus;W_{h&space;c}&space;h_{t_1}&plus;b_{c}\right)" title="c_{t} =f_{t} c_{t-1}+i_{t} \tanh \left(W_{x c} x_{t}+W_{h c} h_{t_1}+b_{c}\right)" /></a>
