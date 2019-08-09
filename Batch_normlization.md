@@ -66,3 +66,9 @@ network parameters during training.
 这个问题似乎没有标准答案，正如前面所讨论的BN就是将每层数据标准化，默认的做法是将在激活之后进行BN操作，但是如果在数据进入激活函数之前进行标准化，如果新分布均值为0那么会有一般的激活输出为0，但是由于BN是可以控制训练分布的偏移，所以也就能大致控制被激活神经元数量，但有时候这样做效果会比放在激活之后好，所以还是都实验一下比较好。
 
 #### 通过一个实验对比
+
+#### 其他的Normalization方法
+参考：https://www.zhihu.com/question/68730628/answer/607608890
+1. Layer Normalization: 针对单个训练样本进行，不依赖其他数据，可用在mini batch较小的场景下，BN可以做到对单个神经元的均值方差转换，但是LN只能做到对一整层神经元的均值方差进行转换，会降低模型的表达能力。
+2. Instance Normalization：针对一张图片的一个通道进行Normalization，用于风格迁移有较好的效果。
+3. Group Normalization：与Layer类似，只不过是选取一些通道作为一个group来Normalization，这样就不必对所有神经元节点进行转换，可以提高模型的表达能力，
